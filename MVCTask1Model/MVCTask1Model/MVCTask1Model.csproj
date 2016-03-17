@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MVCTask1EF">
+      <HintPath>..\..\MVCTask1EF\MVCTask1EF\bin\Debug\MVCTask1EF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\GameRepository.cs" />
+    <Compile Include="RepositoryInterfaces\ICommentRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IGameRepository.cs" />
     <Compile Include="RepositoryInterfaces\IRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
