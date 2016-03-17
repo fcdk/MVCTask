@@ -1,14 +1,15 @@
-﻿using MVCTask1EF;
+﻿using System.Collections.Generic;
+using MVCTask1EF;
 
 namespace MVCTask1Model.RepositoryInterfaces
 {
     public interface IGameRepository : IRepository<Game>
     {
-        void Edit(Game game);
+        void Update(Game game);
         void Delete(Game game);
-        Game[] GetAllGames();
+        IEnumerable<Game> GetAllGames();
         Game GetGameByKey(string key);
-        Game[] GetGamesByGenre(string genreName);
-        Game[] GetGamesByPlatformType(string platformType);
+        IEnumerable<Game> GetGamesByGenre(string genreName);
+        IEnumerable<Game> GetGamesByPlatformType(string platformType);
     }
 }

@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\MVCTask1EF\MVCTask1EF\bin\Debug\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="MVCTask1EF">
       <HintPath>..\..\MVCTask1EF\MVCTask1EF\bin\Debug\MVCTask1EF.dll</HintPath>
     </Reference>
