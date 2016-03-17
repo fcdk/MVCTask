@@ -1,0 +1,10 @@
+c:\users\max\documents\visual studio 2015\Projects\MVCTask1EF\MVCTask1EF\bin\Debug\MVCTask1EF.dll.config
+c:\users\max\documents\visual studio 2015\Projects\MVCTask1EF\MVCTask1EF\bin\Debug\MVCTask1EF.dll
+c:\users\max\documents\visual studio 2015\Projects\MVCTask1EF\MVCTask1EF\bin\Debug\MVCTask1EF.pdb
+c:\users\max\documents\visual studio 2015\Projects\MVCTask1EF\MVCTask1EF\bin\Debug\EntityFramework.dll
+c:\users\max\documents\visual studio 2015\Projects\MVCTask1EF\MVCTask1EF\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\max\documents\visual studio 2015\Projects\MVCTask1EF\MVCTask1EF\bin\Debug\EntityFramework.xml
+c:\users\max\documents\visual studio 2015\Projects\MVCTask1EF\MVCTask1EF\bin\Debug\EntityFramework.SqlServer.xml
+c:\users\max\documents\visual studio 2015\Projects\MVCTask1EF\MVCTask1EF\obj\Debug\MVCTask1EF.csprojResolveAssemblyReference.cache
+c:\users\max\documents\visual studio 2015\Projects\MVCTask1EF\MVCTask1EF\obj\Debug\MVCTask1EF.dll
+c:\users\max\documents\visual studio 2015\Projects\MVCTask1EF\MVCTask1EF\obj\Debug\MVCTask1EF.pdb
