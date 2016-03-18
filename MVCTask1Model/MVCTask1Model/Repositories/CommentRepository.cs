@@ -11,6 +11,9 @@ namespace MVCTask1Model.Repositories
 
         public void Create(Game game, string name, string body, Comment parentComment = null)
         {
+            if (game == null || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(body))
+                return;            
+
             Comment comment = new Comment
             {
                 CommentKey = Guid.NewGuid().ToString(),
@@ -20,14 +23,10 @@ namespace MVCTask1Model.Repositories
                 GameKey = game.GameKey
             };
 
+            if (parentComment != null)
+                comment.Body = comment.Body.Insert(0, "[" + parentComment.Name + "] ");
 
-            if (comment.Name != null && comment.Body != null && comment.GameKey != null && comment.Name != String.Empty
-                && comment.Body != String.Empty && comment.GameKey != String.Empty)
-            {
-                if (parentComment != null)
-                    comment.Body = comment.Body.Insert(0, "[" + parentComment.Name + "] ");
-                _dbEntities.Comments.Add(comment);
-            }            
+            _dbEntities.Comments.Add(comment);
         }
 
         public IEnumerable<Comment> GetCommentsByGame(Game game)

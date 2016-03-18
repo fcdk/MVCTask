@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MVCTask1EF;
 using MVCTask1Model.RepositoryInterfaces;
 using System.Data.Entity;
@@ -10,18 +9,29 @@ namespace MVCTask1Model.Repositories
     public class GameRepository : IGameRepository
     {
         private readonly MVCTask1Entities _dbEntities;
-        private bool _disposed = false;
 
-        public void Create(Game item)
+        public void Create(string name, string description)
         {
-            if (item != null)
-                _dbEntities.Games.Add(item);
-        }        
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(description))
+                return;
 
-        public void Update(Game game)
+            Game game = new Game
+            {                
+                Name = name,
+                Description = description
+            };
+
+            _dbEntities.Games.Add(game);
+        }
+
+        public void Update(Game game, string name, string description)
         {
-            if (_dbEntities != null && game != null)
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(description))
+            {
+                game.Name = name;
+                game.Description = description;
                 _dbEntities.Entry(game).State = EntityState.Modified;
+            }            
         }
 
         public void Delete(string key)
