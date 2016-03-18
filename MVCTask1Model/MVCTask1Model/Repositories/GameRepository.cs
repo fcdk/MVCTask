@@ -9,7 +9,7 @@ namespace MVCTask1Model.Repositories
 {
     public class GameRepository : IGameRepository
     {
-        private MVCTask1Entities _dbEntities;
+        private readonly MVCTask1Entities _dbEntities;
         private bool _disposed = false;
 
         public void Create(Game item)
@@ -63,25 +63,7 @@ namespace MVCTask1Model.Repositories
         {
             return _dbEntities?.Games.Where(game => game.PlatformTypeInGames.
                 Any(platformTypeInGames => platformTypeInGames.PlatformType.Type == platformType));
-        }
-
-        private void CleanUp(bool disposing)
-        {
-            if (!this._disposed)
-            {
-                if (disposing)
-                {
-                    _dbEntities.Dispose();
-                }
-            }
-            this._disposed = true;
-        }
-
-        public void Dispose()
-        {
-            CleanUp(true);
-            GC.SuppressFinalize(this);
-        }
+        }        
 
         public GameRepository(MVCTask1Entities dbEntities)
         {
