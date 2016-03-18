@@ -6,7 +6,7 @@ namespace MVCTask1Model.RepositoryInterfaces
     public interface IGameRepository : IRepository<Game>
     {
         void Update(Game game);
-        void Delete(Game game);
+        void Delete(string key);
         IEnumerable<Game> GetAllGames();
         Game GetGameByKey(string key);
         IEnumerable<Game> GetGamesByGenre(string genreName);

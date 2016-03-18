@@ -24,9 +24,11 @@ namespace MVCTask1Model.Repositories
                 _dbEntities.Entry(game).State = EntityState.Modified;
         }
 
-        public void Delete(Game game)
+        public void Delete(string key)
         {
-            // тут надо на id поменять!!!!!!!!!!!
+            Game game = _dbEntities?.Games.Find(key);
+            if (game != null)
+                _dbEntities.Games.Remove(game);
         }
 
         public IEnumerable<Game> GetAllGames()
@@ -39,15 +41,28 @@ namespace MVCTask1Model.Repositories
             return _dbEntities?.Games.Find(key);
         }
 
+        //get games by genreName and parent genres of genre with genreName
         public IEnumerable<Game> GetGamesByGenre(string genreName)
         {
-            throw new System.NotImplementedException();
+            List<Game> result = new List<Game>();
+
+            Genre genre = _dbEntities?.Genres.First(g => g.Name == genreName);
+
+            while (genre != null)
+            {
+                result.AddRange(_dbEntities.Games.Where(game => game.GenreInGames.
+                    Any(genreInGames => genreInGames.Genre.Name == genre.Name)));
+
+                genre = genre.Genre2;
+            }
+
+            return result.Count == 0 ? null : result;
         }
 
         public IEnumerable<Game> GetGamesByPlatformType(string platformType)
         {
-            ////_dbEntities.Games.Where(game => game.PlatformTypeInGames.Any())
-            throw new System.NotImplementedException();
+            return _dbEntities?.Games.Where(game => game.PlatformTypeInGames.
+                Any(platformTypeInGames => platformTypeInGames.PlatformType.Type == platformType));
         }
 
         private void CleanUp(bool disposing)
