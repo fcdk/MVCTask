@@ -3,8 +3,9 @@ using MVCTask1EF;
 
 namespace MVCTask1Model.RepositoryInterfaces
 {
-    public interface IGameRepository : IRepository<Game>
+    public interface IGameRepository
     {
+        void Create(string name, string description);
         void Update(Game game);
         void Delete(string key);
         IEnumerable<Game> GetAllGames();
