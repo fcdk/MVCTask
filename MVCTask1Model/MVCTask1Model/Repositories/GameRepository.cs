@@ -26,10 +26,11 @@ namespace MVCTask1Model.Repositories
             _dbEntities.Games.Add(game);
         }
 
-        public void Update(Game game, string name, string description)
+        public void Update(string key, string name, string description)
         {
-            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(description))
+            if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(description))
             {
+                Game game = _dbEntities.Games.Find(key);
                 game.Name = name;
                 game.Description = description;
                 _dbEntities.Entry(game).State = EntityState.Modified;

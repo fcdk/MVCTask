@@ -5,7 +5,7 @@ namespace MVCTask1Model.RepositoryInterfaces
 {
     public interface ICommentRepository
     {
-        void Create(Game game, string name, string body, Comment parentComment = null);
-        IEnumerable<Comment> GetCommentsByGame(Game game);
+        void Create(string gameKey, string name, string body, string parentCommentKey = null);
+        IEnumerable<Comment> GetCommentsByGame(string gameKey);
     }
 }

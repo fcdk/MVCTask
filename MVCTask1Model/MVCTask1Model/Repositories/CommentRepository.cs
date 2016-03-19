@@ -9,29 +9,29 @@ namespace MVCTask1Model.Repositories
     {
         private readonly MVCTask1Entities _dbEntities;
 
-        public void Create(Game game, string name, string body, Comment parentComment = null)
+        public void Create(string gameKey, string name, string body, string parentCommentKey = null)
         {
-            if (game == null || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(body))
+            if (string.IsNullOrEmpty(gameKey) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(body) || parentCommentKey == String.Empty)
                 return;            
 
             Comment comment = new Comment
             {
                 CommentKey = Guid.NewGuid().ToString(),
-                ParentCommentKey = parentComment?.CommentKey,
+                ParentCommentKey = parentCommentKey,
                 Name = name,
                 Body = body,
-                GameKey = game.GameKey
+                GameKey = gameKey
             };
 
-            if (parentComment != null)
-                comment.Body = comment.Body.Insert(0, "[" + parentComment.Name + "] ");
+            if (parentCommentKey != null)
+                comment.Body = comment.Body.Insert(0, "[" + _dbEntities.Comments.Find(parentCommentKey).Name + "] ");
 
             _dbEntities.Comments.Add(comment);
         }
 
-        public IEnumerable<Comment> GetCommentsByGame(Game game)
+        public IEnumerable<Comment> GetCommentsByGame(string gameKey)
         {
-            return game.Comments;
+            return _dbEntities.Games.Find(gameKey).Comments;
         }
 
         public CommentRepository(MVCTask1Entities dbEntities)

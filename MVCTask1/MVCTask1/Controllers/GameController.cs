@@ -31,5 +31,14 @@ namespace MVCTask1.Controllers
             _unitOfWork.Save();
             return Json(name + " was created");
         }
+
+        [HttpPost]
+        [Route("games/update")]
+        public JsonResult Update(string key, string name, string description)
+        {
+            _unitOfWork.Games.Create(name, description);
+            _unitOfWork.Save();
+            return Json(name + " was updated");
+        }
     }
 }
