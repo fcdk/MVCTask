@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MVCTask1EF;
 using MVCTask1Model.RepositoryInterfaces;
 using System.Data.Entity;
@@ -16,7 +17,8 @@ namespace MVCTask1Model.Repositories
                 return;
 
             Game game = new Game
-            {                
+            {
+                GameKey = Guid.NewGuid().ToString(),
                 Name = name,
                 Description = description
             };
