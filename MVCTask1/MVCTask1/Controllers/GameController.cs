@@ -90,5 +90,23 @@ namespace MVCTask1.Controllers
             return Json("game with primary key " + key + " was deleted");
         }
 
+        [HttpPost]
+        [Route("game/{key}/newcomment")]
+        public JsonResult AddCommentToGame(string key, string name, string body, string parentCommentKey = null)
+        {
+            try
+            {
+                _unitOfWork.Comments.Create(key, name, body, parentCommentKey);
+            }
+            catch (ArgumentException ex)
+            {
+                return Json(ex.Message);
+            }
+
+            _unitOfWork.Save();
+
+            return Json("user " + name + " has posted the comment: " + body);
+        }
+
     }
 }

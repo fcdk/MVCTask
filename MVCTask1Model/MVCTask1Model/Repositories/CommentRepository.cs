@@ -14,6 +14,9 @@ namespace MVCTask1Model.Repositories
             if (string.IsNullOrEmpty(gameKey) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(body))
                 throw new ArgumentException("gameKey, name and body arguments mustn`t be null and empty");
 
+            if (_dbEntities.Games.Find(gameKey) == null)
+                throw new ArgumentException("DB doesn`t contain game with such primary key like gameKey argument");
+
             Comment comment = new Comment
             {
                 CommentKey = Guid.NewGuid().ToString(),
