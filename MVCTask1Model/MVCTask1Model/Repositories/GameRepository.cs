@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using MVCTask1EF;
 using MVCTask1Model.RepositoryInterfaces;
@@ -13,14 +14,14 @@ namespace MVCTask1Model.Repositories
 
         public void Create(string name, string description)
         {
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(description))
-                return;
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("name argument mustn`t be null and empty");
 
             Game game = new Game
             {
                 GameKey = Guid.NewGuid().ToString(),
                 Name = name,
-                Description = description
+                Description = description != String.Empty ? description : null
             };
 
             _dbEntities.Games.Add(game);
@@ -28,20 +29,27 @@ namespace MVCTask1Model.Repositories
 
         public void Update(string key, string name, string description)
         {
-            if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(description))
-            {
-                Game game = _dbEntities.Games.Find(key);
-                game.Name = name;
-                game.Description = description;
-                _dbEntities.Entry(game).State = EntityState.Modified;
-            }            
+            if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(name))
+                throw new ArgumentException("key and name arguments must not be null and empty");
+
+            Game game = _dbEntities.Games.Find(key);
+
+            if(game == null)
+                throw new ArgumentException("DB doesn`t contain game with such primary key");
+
+            game.Name = name;
+            game.Description = description != String.Empty ? description : null;
+            _dbEntities.Entry(game).State = EntityState.Modified;
         }
 
         public void Delete(string key)
         {
             Game game = _dbEntities.Games.Find(key);
-            if (game != null)
-                _dbEntities.Games.Remove(game);
+
+            if (game == null)
+                throw new ArgumentException("DB doesn`t contain game with such primary key");
+
+            _dbEntities.Games.Remove(game);
         }
 
         public IEnumerable<Game> GetAllGames()
@@ -50,8 +58,13 @@ namespace MVCTask1Model.Repositories
         }
 
         public Game GetGameByKey(string key)
-        {            
-            return _dbEntities.Games.Find(key);
+        {
+            Game game = _dbEntities.Games.Find(key);
+
+            if (game == null)
+                throw new ArgumentException("DB doesn`t contain the game with such primary key");
+            
+            return game;
         }
 
         //get games by genreName and parent genres of genre with genreName
