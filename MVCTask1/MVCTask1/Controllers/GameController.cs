@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Web.Mvc;
 using MVCTask1EF;
 using MVCTask1Model;
@@ -116,6 +118,25 @@ namespace MVCTask1.Controllers
                 return Json(_unitOfWork.Comments.GetCommentsByGame(key).Select(comment =>
                     new { game = _unitOfWork.Games.GetGameByKey(comment.GameKey).Name , name = comment.Name, comment.Body }),
                     JsonRequestBehavior.AllowGet);
+            }
+            catch (ArgumentException ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [Route("game/{key}/download")]
+        public ActionResult DownloadGame(string key)
+        {
+            try
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    Game game = _unitOfWork.Games.GetGameByKey(key);
+                    bf.Serialize(ms, "Name: " + game.Name + Environment.NewLine + "Description: " + game.Description);
+                    return File(ms.ToArray(), "application/bin", "game.bin");
+                }                
             }
             catch (ArgumentException ex)
             {
