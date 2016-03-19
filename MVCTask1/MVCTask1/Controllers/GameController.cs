@@ -69,7 +69,25 @@ namespace MVCTask1.Controllers
             catch (ArgumentException ex)
             {
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
-            }                        
+            }
+        }
+
+        [HttpPost]
+        [Route("games/remove")]
+        public JsonResult DeleteGame(string key)
+        {
+            try
+            {
+                _unitOfWork.Games.Delete(key);
+            }
+            catch (ArgumentException ex)
+            {
+                return Json(ex.Message);
+            }
+
+            _unitOfWork.Save();
+
+            return Json("game with primary key " + key + " was deleted");
         }
 
     }
