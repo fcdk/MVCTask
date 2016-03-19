@@ -1,9 +1,6 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
-using System.Web.Routing;
-using Microsoft.Web.Infrastructure;
 using MVCTask1Model;
 
 namespace MVCTask1.Controllers
@@ -27,8 +24,17 @@ namespace MVCTask1.Controllers
         [Route("games/new")]
         public JsonResult New(string name, string description)
         {
-            _unitOfWork.Games.Create(name, description);
+            try
+            {
+                _unitOfWork.Games.Create(name, description);
+            }
+            catch (ArgumentException ex)
+            {
+                return Json(ex.Message);
+            }
+
             _unitOfWork.Save();
+
             return Json(name + " was created");
         }
 
@@ -36,9 +42,18 @@ namespace MVCTask1.Controllers
         [Route("games/update")]
         public JsonResult Update(string key, string name, string description)
         {
-            _unitOfWork.Games.Create(name, description);
+            try
+            {
+                _unitOfWork.Games.Update(key, name, description);
+            }
+            catch (ArgumentException ex)
+            {
+                return Json(ex.Message);
+            }
+            
             _unitOfWork.Save();
-            return Json(name + " was updated");
+
+            return Json("game with primary key " + key + " was updated");
         }
     }
 }
