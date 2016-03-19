@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -15,7 +16,7 @@ namespace MVCTask1.Controllers
         public GameController()
         {
             _unitOfWork = new UnitOfWork();
-        }
+        }        
 
         [Route("games")]
         public JsonResult GetAllGames()
@@ -142,6 +143,12 @@ namespace MVCTask1.Controllers
             {
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [Route("gamesbygenre/{genreName}")]
+        public JsonResult GetGamesByGenre(string genreName)
+        {
+            return Json(_unitOfWork.Games.GetGamesByGenre(genreName)?.Select(game => new { game.Name, game.Description }), JsonRequestBehavior.AllowGet);
         }
 
     }

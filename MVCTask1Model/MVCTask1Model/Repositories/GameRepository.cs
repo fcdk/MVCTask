@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using MVCTask1EF;
 using MVCTask1Model.RepositoryInterfaces;
@@ -67,21 +66,24 @@ namespace MVCTask1Model.Repositories
             return game;
         }
 
-        //get games by genreName and parent genres of genre with genreName
+        //get games by genreName and child genres of genre with genreName
         public IEnumerable<Game> GetGamesByGenre(string genreName)
         {
             List<Game> result = new List<Game>();
 
             Genre genre = _dbEntities.Genres.First(g => g.Name == genreName);
+            if (genre == null)
+                return null;
+            result.AddRange(genre.GenreInGames.Select(genreInGame => genreInGame.Game));
 
-            while (genre != null)
+            List<Genre> parentGenres = new List<Genre>();
+            GetAllChildGenres(genre, ref parentGenres);
+            if (parentGenres.Count == 0)
+                return result.Count == 0 ? null : result;
+            foreach (var g in parentGenres)
             {
-                result.AddRange(_dbEntities.Games.Where(game => game.GenreInGames.
-                    Any(genreInGames => genreInGames.Genre.Name == genre.Name)));
-
-                genre = genre.Genre2;
+                result.AddRange(g.GenreInGames.Select(genreInGame => genreInGame.Game));
             }
-
             return result.Count == 0 ? null : result;
         }
 
@@ -94,6 +96,21 @@ namespace MVCTask1Model.Repositories
         public GameRepository(MVCTask1Entities dbEntities)
         {
             _dbEntities = dbEntities;
+        }
+
+
+        //recursive function: in resultChildGenres will be all child genres of genre argument
+        private void GetAllChildGenres(Genre genre, ref List<Genre> resultChildGenres)
+        {
+            IEnumerable<Genre> parentGenres = genre?.Genre1;
+
+            if (parentGenres == null)
+                return;
+            foreach (var g in parentGenres)
+            {
+                resultChildGenres.Add(g);
+                GetAllChildGenres(g, ref resultChildGenres);
+            }
         }
     }
 }
