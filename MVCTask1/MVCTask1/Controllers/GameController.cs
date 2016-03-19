@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using MVCTask1EF;
 using MVCTask1Model;
 
 namespace MVCTask1.Controllers
@@ -15,14 +16,14 @@ namespace MVCTask1.Controllers
         }
 
         [Route("games")]
-        public JsonResult Games()
+        public JsonResult GetAllGames()
         {
             return Json(_unitOfWork.Games.GetAllGames().Select(game => new{ game.Name, game.Description }), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [Route("games/new")]
-        public JsonResult New(string name, string description)
+        public JsonResult CreateGame(string name, string description)
         {
             try
             {
@@ -40,7 +41,7 @@ namespace MVCTask1.Controllers
 
         [HttpPost]
         [Route("games/update")]
-        public JsonResult Update(string key, string name, string description)
+        public JsonResult UpdateGame(string key, string name, string description)
         {
             try
             {
@@ -55,5 +56,21 @@ namespace MVCTask1.Controllers
 
             return Json("game with primary key " + key + " was updated");
         }
+
+        [Route("game/{key}")]
+        public JsonResult GetGameByKey(string key)
+        {
+            try
+            {
+                Game game = _unitOfWork.Games.GetGameByKey(key);
+
+                return Json(new { name = game.Name, description = game.Description }, JsonRequestBehavior.AllowGet);
+            }
+            catch (ArgumentException ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }                        
+        }
+
     }
 }
