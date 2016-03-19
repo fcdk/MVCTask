@@ -108,5 +108,20 @@ namespace MVCTask1.Controllers
             return Json("user " + name + " has posted the comment: " + body);
         }
 
+        [Route("game/{key}/comments")]
+        public JsonResult GetAllCommentsByGame(string key)
+        {
+            try
+            {
+                return Json(_unitOfWork.Comments.GetCommentsByGame(key).Select(comment =>
+                    new { game = _unitOfWork.Games.GetGameByKey(comment.GameKey).Name , name = comment.Name, comment.Body }),
+                    JsonRequestBehavior.AllowGet);
+            }
+            catch (ArgumentException ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }
