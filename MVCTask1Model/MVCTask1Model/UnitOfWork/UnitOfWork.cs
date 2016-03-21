@@ -1,27 +1,28 @@
-﻿using MVCTask1EF;
-using System;
+﻿using System;
+using MVCTask1EF;
 using MVCTask1Model.Repositories;
+using MVCTask1Model.RepositoryInterfaces;
 
-namespace MVCTask1Model
+namespace MVCTask1Model.UnitOfWork
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly MVCTask1Entities _dbEntities = new MVCTask1Entities();
-        private GameRepository _gameRepository;
-        private CommentRepository _commentRepository;
+        private IGameRepository _gameRepository;
+        private ICommentRepository _commentRepository;
         private bool _disposed = false;
 
-        public GameRepository Games
+        public IGameRepository Games
         {
             get
             {
                 if (_gameRepository == null)
                     _gameRepository = new GameRepository(_dbEntities);
-                return _gameRepository;
+                return _gameRepository;                
             }
         }
 
-        public CommentRepository Comments
+        public ICommentRepository Comments
         {
             get
             {
@@ -34,24 +35,25 @@ namespace MVCTask1Model
         public void Save()
         {
             _dbEntities.SaveChanges();
+        }        
+        
+        public void Dispose()
+        {
+            CleanUp(true);
+            GC.SuppressFinalize(this);
         }
 
         private void CleanUp(bool disposing)
         {
-            if (!this._disposed)
+            if (!_disposed)
             {
                 if (disposing)
                 {
                     _dbEntities.Dispose();
                 }
             }
-            this._disposed = true;
+            _disposed = true;
         }
 
-        public void Dispose()
-        {
-            CleanUp(true);
-            GC.SuppressFinalize(this);
-        }
     }
 }

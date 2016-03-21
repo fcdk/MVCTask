@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using MVCTask1.App_Start;
 
 namespace MVCTask1
 {
@@ -9,6 +10,8 @@ namespace MVCTask1
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            DependencyResolver.SetResolver(new NinjectDependencyResolver());
         }
     }
 }

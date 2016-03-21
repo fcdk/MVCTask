@@ -47,10 +47,10 @@ namespace MVCTask1Model.Repositories
                 throw new ArgumentException("DB doesn`t contain game with such primary key like gameKey argument");
 
             return game.Comments;
-        }
+        }     
 
         public CommentRepository(MVCTask1Entities dbEntities)
-        {
+        {                        
             _dbEntities = dbEntities;
         }
     }

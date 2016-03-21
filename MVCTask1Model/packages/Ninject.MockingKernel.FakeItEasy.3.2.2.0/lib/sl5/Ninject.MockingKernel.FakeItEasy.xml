@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ninject.MockingKernel.FakeItEasy</name>
+    </assembly>
+    <members>
+        <member name="T:Ninject.MockingKernel.FakeItEasy.FakeItEasyMockingKernel">
+            <summary>
+            Mocking kernel for NSubstitute
+            </summary>
+        </member>
+        <member name="M:Ninject.MockingKernel.FakeItEasy.FakeItEasyMockingKernel.#ctor">
+            <summary>
+              Initializes a new instance of the <see cref="T:Ninject.MockingKernel.FakeItEasy.FakeItEasyMockingKernel"/> class.
+            </summary>
+        </member>
+        <member name="M:Ninject.MockingKernel.FakeItEasy.FakeItEasyMockingKernel.#ctor(Ninject.INinjectSettings,Ninject.Modules.INinjectModule[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Ninject.MockingKernel.FakeItEasy.FakeItEasyMockingKernel"/> class.
+            </summary>
+            <param name="settings">
+            The configuration to use.
+            </param>
+            <param name="modules">
+            The modules to load into the kernel.
+            </param>
+        </member>
+        <member name="T:Ninject.MockingKernel.FakeItEasy.FakeItEasyMockProvider">
+            <summary>
+            Creates mocked instances via <c>FakeItEasy</c>.
+            </summary>
+        </member>
+        <member name="F:Ninject.MockingKernel.FakeItEasy.FakeItEasyMockProvider.additionalInterfaces">
+            <summary>
+            Additional interfaces the proxy to implement.
+            </summary>
+        </member>
+        <member name="M:Ninject.MockingKernel.FakeItEasy.FakeItEasyMockProvider.GetCreationCallback">
+            <summary>
+            Gets a callback that creates an instance of the <see cref="T:Ninject.MockingKernel.FakeItEasy.FakeItEasyMockProvider"/>.
+            </summary>
+            <returns>The created callback.</returns>
+        </member>
+        <member name="M:Ninject.MockingKernel.FakeItEasy.FakeItEasyMockProvider.Create(Ninject.Activation.IContext)">
+            <summary>
+            Creates an instance within the specified context.
+            </summary>
+            <param name="context">The context.</param>
+            <returns>The created instance.</returns>
+        </member>
+        <member name="M:Ninject.MockingKernel.FakeItEasy.FakeItEasyMockProvider.Build``1(FakeItEasy.Creation.IFakeOptionsBuilder{``0})">
+            <summary>
+            Add additional interfaces to the builder.
+            </summary>
+            <typeparam name="T">The proxy type.</typeparam>
+            <param name="builder">The <see cref="T:FakeItEasy.Creation.IFakeOptionsBuilder`1"/>.</param>
+        </member>
+        <member name="P:Ninject.MockingKernel.FakeItEasy.FakeItEasyMockProvider.Type">
+            <summary>
+            Gets the type (or prototype) of instances the provider creates.
+            </summary>
+        </member>
+        <member name="T:Ninject.MockingKernel.FakeItEasy.FakeItEasyModule">
+            <summary>
+            The module for FakeItEasy.
+            </summary>
+        </member>
+        <member name="M:Ninject.MockingKernel.FakeItEasy.FakeItEasyModule.Load">
+            <summary>
+            Loads the module into the kernel.
+            </summary>
+        </member>
+    </members>
+</doc>

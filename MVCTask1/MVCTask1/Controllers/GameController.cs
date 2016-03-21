@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Web.Mvc;
 using MVCTask1EF;
-using MVCTask1Model;
+using MVCTask1Model.UnitOfWork;
 
 namespace MVCTask1.Controllers
 {
     public class GameController : Controller
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GameController()
+        public GameController(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = new UnitOfWork();
-        }        
+            _unitOfWork = unitOfWork;
+        }
 
         [Route("games")]
         public JsonResult GetAllGames()
