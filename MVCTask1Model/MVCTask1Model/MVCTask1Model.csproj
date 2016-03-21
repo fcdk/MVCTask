@@ -33,24 +33,8 @@
     <Reference Include="EntityFramework">
       <HintPath>..\..\MVCTask1EF\MVCTask1EF\bin\Debug\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="FakeItEasy, Version=1.25.3.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
-      <HintPath>..\packages\FakeItEasy.1.25.3\lib\net40\FakeItEasy.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="MVCTask1EF">
       <HintPath>..\..\MVCTask1EF\MVCTask1EF\bin\Debug\MVCTask1EF.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Ninject.MockingKernel, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.MockingKernel.3.2.2.0\lib\net45-full\Ninject.MockingKernel.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Ninject.MockingKernel.FakeItEasy, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.MockingKernel.FakeItEasy.3.2.2.0\lib\net45-full\Ninject.MockingKernel.FakeItEasy.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -72,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
