@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using System.Web.Routing;
 using System.Web.Script.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using MVCTask1.Controllers;
-using MVCTask1EF;
 using MVCTask1Model.RepositoryInterfaces;
 using MVCTask1Model.UnitOfWork;
 using Newtonsoft.Json;
+using MVCTask1EF;
 
 namespace MVCTask1.Tests
 {
@@ -43,7 +44,24 @@ namespace MVCTask1.Tests
             }
 
             mockGameRepository.Verify(x => x.GetAllGames(), Times.Once());
-            mockGameRepository.VerifyAll();
+        }
+
+        [TestMethod]
+        public void RegisterRoutes_games_should_map_GameController_GetAllGamesAction()
+        {        
+            RouteCollection routes = new RouteCollection();
+            RouteConfig.RegisterRoutes(routes);
+            var httpContextMock = new Mock<HttpContextBase>();
+
+            httpContextMock.Setup(x => x.Request
+                .AppRelativeCurrentExecutionFilePath)
+                .Returns("~/games");
+
+            RouteData routeData = routes.GetRouteData(httpContextMock.Object);
+
+            Assert.IsNotNull(routeData);
+            Assert.AreEqual("Game", routeData.Values["Controller"]);
+            Assert.AreEqual("GetAllGames", routeData.Values["action"]);
         }
     }
 }

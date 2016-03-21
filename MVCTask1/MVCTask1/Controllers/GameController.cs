@@ -17,7 +17,7 @@ namespace MVCTask1.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [Route("games")]
+        //[Route("games")]
         public JsonResult GetAllGames()
         {
             return Json(_unitOfWork.Games.GetAllGames().Select(game => new{ game.Name, game.Description }), JsonRequestBehavior.AllowGet);
@@ -142,12 +142,6 @@ namespace MVCTask1.Controllers
             {
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
-        }
-
-        [Route("gamesbygenre/{genreName}")]
-        public JsonResult GetGamesByGenre(string genreName)
-        {
-            return Json(_unitOfWork.Games.GetGamesByGenre(genreName)?.Select(game => new { game.Name, game.Description }), JsonRequestBehavior.AllowGet);
         }
 
     }
