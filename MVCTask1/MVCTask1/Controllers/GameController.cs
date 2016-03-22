@@ -17,14 +17,12 @@ namespace MVCTask1.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //[Route("games")]
         public JsonResult GetAllGames()
         {
             return Json(_unitOfWork.Games.GetAllGames().Select(game => new{ game.Name, game.Description }), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        [Route("games/new")]
         public JsonResult CreateGame(string name, string description)
         {
             try
@@ -42,7 +40,6 @@ namespace MVCTask1.Controllers
         }
 
         [HttpPost]
-        [Route("games/update")]
         public JsonResult UpdateGame(string key, string name, string description)
         {
             try
@@ -59,7 +56,6 @@ namespace MVCTask1.Controllers
             return Json("game with primary key " + key + " was updated");
         }
 
-        [Route("game/{key}")]
         public JsonResult GetGameByKey(string key)
         {
             try
@@ -75,7 +71,6 @@ namespace MVCTask1.Controllers
         }
 
         [HttpPost]
-        [Route("games/remove")]
         public JsonResult DeleteGame(string key)
         {
             try
@@ -93,7 +88,6 @@ namespace MVCTask1.Controllers
         }
 
         [HttpPost]
-        [Route("game/{key}/newcomment")]
         public JsonResult AddCommentToGame(string key, string name, string body, string parentCommentKey = null)
         {
             try
@@ -110,7 +104,6 @@ namespace MVCTask1.Controllers
             return Json("user " + name + " has posted the comment: " + body);
         }
 
-        [Route("game/{key}/comments")]
         public JsonResult GetAllCommentsByGame(string key)
         {
             try
@@ -125,7 +118,6 @@ namespace MVCTask1.Controllers
             }
         }
 
-        [Route("game/{key}/download")]
         public ActionResult DownloadGame(string key)
         {
             try

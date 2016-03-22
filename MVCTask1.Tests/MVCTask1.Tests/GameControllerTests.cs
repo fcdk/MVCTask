@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Routing;
 using System.Web.Script.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -46,22 +44,6 @@ namespace MVCTask1.Tests
             mockGameRepository.Verify(x => x.GetAllGames(), Times.Once());
         }
 
-        [TestMethod]
-        public void RegisterRoutes_games_should_map_GameController_GetAllGamesAction()
-        {        
-            RouteCollection routes = new RouteCollection();
-            RouteConfig.RegisterRoutes(routes);
-            var httpContextMock = new Mock<HttpContextBase>();
-
-            httpContextMock.Setup(x => x.Request
-                .AppRelativeCurrentExecutionFilePath)
-                .Returns("~/games");
-
-            RouteData routeData = routes.GetRouteData(httpContextMock.Object);
-
-            Assert.IsNotNull(routeData);
-            Assert.AreEqual("Game", routeData.Values["Controller"]);
-            Assert.AreEqual("GetAllGames", routeData.Values["action"]);
-        }
+        
     }
 }
