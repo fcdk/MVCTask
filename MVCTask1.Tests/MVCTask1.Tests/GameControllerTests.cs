@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Script.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -57,6 +58,29 @@ namespace MVCTask1.Tests
 
             mockGameRepository.Verify(x => x.Create("TestName", "TestDescription"), Times.Once());
             mockUnitOfWork.Verify(x => x.Save(), Times.Once());
+        }
+
+        [TestMethod]
+        public void CreateGame_name_is_null_should_not_throw_exception_and_not_call_unitOfWork_Save()
+        {
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            var mockGameRepository = new Mock<IGameRepository>();
+            mockUnitOfWork.Setup(x => x.Games).Returns(mockGameRepository.Object);
+            mockGameRepository.Setup(x => x.Create(null, It.IsAny<string>()))
+              .Throws(new ArgumentException("name argument mustn`t be null and empty"));
+
+            var controller = new GameController(mockUnitOfWork.Object);            
+
+            try
+            {
+                controller.CreateGame(null, null);
+            }
+            catch (ArgumentException ex)
+            {
+                Assert.Fail("Expected no exception, but got: " + ex.Message);
+            }
+
+            mockUnitOfWork.Verify(x => x.Save(), Times.Never());
         }
 
     }
