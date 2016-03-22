@@ -62,7 +62,7 @@ namespace MVCTask1.Controllers
             {
                 Game game = _unitOfWork.Games.GetGameByKey(key);
 
-                return Json(new { name = game.Name, description = game.Description }, JsonRequestBehavior.AllowGet);
+                return Json(new { game.GameKey, game.Name, game.Description }, JsonRequestBehavior.AllowGet);
             }
             catch (ArgumentException ex)
             {
@@ -109,7 +109,7 @@ namespace MVCTask1.Controllers
             try
             {
                 return Json(_unitOfWork.Comments.GetCommentsByGame(key).Select(comment =>
-                    new { game = _unitOfWork.Games.GetGameByKey(comment.GameKey).Name , name = comment.Name, comment.Body }),
+                    new { comment.CommentKey, comment.GameKey, Game = _unitOfWork.Games.GetGameByKey(comment.GameKey).Name, comment.Name, comment.Body }),
                     JsonRequestBehavior.AllowGet);
             }
             catch (ArgumentException ex)
