@@ -44,6 +44,20 @@ namespace MVCTask1.Tests
             mockGameRepository.Verify(x => x.GetAllGames(), Times.Once());
         }
 
-        
+        [TestMethod]
+        public void CreateGame_create_is_successful_should_call_once_unitOfWork_Games_Create_and_unitOfWork_Save()
+        {
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            var mockGameRepository = new Mock<IGameRepository>();
+            mockUnitOfWork.Setup(x => x.Games).Returns(mockGameRepository.Object);
+
+            var controller = new GameController(mockUnitOfWork.Object);
+
+            controller.CreateGame("TestName", "TestDescription");
+
+            mockGameRepository.Verify(x => x.Create("TestName", "TestDescription"), Times.Once());
+            mockUnitOfWork.Verify(x => x.Save(), Times.Once());
+        }
+
     }
 }
