@@ -23,7 +23,7 @@ namespace MVCTask1.Tests
             var games = new List<Game>()
             {
                 new Game { Name = "NameTest1", Description = "DescriptionTest1" },
-                new Game { Name = "NameTest2", Description = "DescriptionTest2" },
+                new Game { Name = "NameTest2", Description = "DescriptionTest2" }
             };
 
             mockGameRepository.Setup(x => x.GetAllGames())
@@ -60,8 +60,9 @@ namespace MVCTask1.Tests
             mockUnitOfWork.Verify(x => x.Save(), Times.Once());
         }
 
+
         [TestMethod]
-        public void CreateGame_name_is_null_should_not_throw_exception_and_not_call_unitOfWork_Save()
+        public void CreateGame_name_is_null_should_not_throw_ArgumentException_and_not_call_unitOfWork_Save()
         {
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockGameRepository = new Mock<IGameRepository>();
@@ -70,18 +71,74 @@ namespace MVCTask1.Tests
               .Throws(new ArgumentException("name argument mustn`t be null and empty"));
 
             var controller = new GameController(mockUnitOfWork.Object);            
+            
+            controller.CreateGame(null, "TestName");
+            
+            mockUnitOfWork.Verify(x => x.Save(), Times.Never());
+        }
 
-            try
-            {
-                controller.CreateGame(null, null);
-            }
-            catch (ArgumentException ex)
-            {
-                Assert.Fail("Expected no exception, but got: " + ex.Message);
-            }
+        [TestMethod]
+        public void CreateGame_name_is_empty_string_should_not_throw_ArgumentException_and_not_call_unitOfWork_Save()
+        {
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            var mockGameRepository = new Mock<IGameRepository>();
+            mockUnitOfWork.Setup(x => x.Games).Returns(mockGameRepository.Object);
+            mockGameRepository.Setup(x => x.Create(String.Empty, It.IsAny<string>()))
+              .Throws(new ArgumentException("name argument mustn`t be null and empty"));
+
+            var controller = new GameController(mockUnitOfWork.Object);
+
+            controller.CreateGame(string.Empty, "TestName");
 
             mockUnitOfWork.Verify(x => x.Save(), Times.Never());
         }
 
+        [TestMethod]
+        public void UpdateGame_update_is_successful_should_call_once_unitOfWork_Games_Update_and_unitOfWork_Save()
+        {
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            var mockGameRepository = new Mock<IGameRepository>();
+            mockUnitOfWork.Setup(x => x.Games).Returns(mockGameRepository.Object);
+
+            var controller = new GameController(mockUnitOfWork.Object);
+
+            controller.UpdateGame("TestKey", "TestName", "TestDescription");
+
+            mockGameRepository.Verify(x => x.Update("TestKey", "TestName", "TestDescription"), Times.Once());
+            mockUnitOfWork.Verify(x => x.Save(), Times.Once());
+        }
+
+        [TestMethod]
+        public void UpdateGame_key_is_null_should_not_throw_ArgumentException_and_not_call_unitOfWork_Save()
+        {
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            var mockGameRepository = new Mock<IGameRepository>();
+            mockUnitOfWork.Setup(x => x.Games).Returns(mockGameRepository.Object);
+            mockGameRepository.Setup(x => x.Update(null, It.IsAny<string>(), It.IsAny<string>()))
+              .Throws(new ArgumentException("key and name arguments must not be null and empty"));
+
+            var controller = new GameController(mockUnitOfWork.Object);
+
+            controller.UpdateGame(null, "TestName", "TestDescription");           
+
+            mockUnitOfWork.Verify(x => x.Save(), Times.Never());
+        }
+
+        [TestMethod]
+        public void UpdateGame_name_is_empty_string_should_not_throw_ArgumentException_and_not_call_unitOfWork_Save()
+        {
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            var mockGameRepository = new Mock<IGameRepository>();
+            mockUnitOfWork.Setup(x => x.Games).Returns(mockGameRepository.Object);
+            mockGameRepository.Setup(x => x.Update(String.Empty, It.IsAny<string>(), It.IsAny<string>()))
+              .Throws(new ArgumentException("name argument mustn`t be null and empty"));
+
+            var controller = new GameController(mockUnitOfWork.Object);
+
+            controller.UpdateGame(string.Empty, "TestName", "TestDescription");
+
+            mockUnitOfWork.Verify(x => x.Save(), Times.Never());
+        }
+        
     }
 }
