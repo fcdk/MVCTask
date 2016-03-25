@@ -25,15 +25,7 @@ namespace MVCTask1.Controllers
         [HttpPost]
         public JsonResult CreateGame(string name, string description)
         {
-            try
-            {
-                _unitOfWork.Games.Create(name, description);
-            }
-            catch (ArgumentException ex)
-            {
-                return Json(ex.Message);
-            }
-
+            _unitOfWork.Games.Insert(new Game { Name = name, Description = description });
             _unitOfWork.Save();
 
             return Json(name + " was created");
@@ -42,15 +34,10 @@ namespace MVCTask1.Controllers
         [HttpPost]
         public JsonResult UpdateGame(string key, string name, string description)
         {
-            try
-            {
-                _unitOfWork.Games.Update(key, name, description);
-            }
-            catch (ArgumentException ex)
-            {
-                return Json(ex.Message);
-            }
-            
+            Game game = _unitOfWork.Games.GetByKey(key);
+            game.Name = name;
+            game.Description = description;
+            _unitOfWork.Games.Update(game);
             _unitOfWork.Save();
 
             return Json("game with primary key " + key + " was updated");
@@ -58,29 +45,15 @@ namespace MVCTask1.Controllers
 
         public JsonResult GetGameByKey(string key)
         {
-            try
-            {
-                Game game = _unitOfWork.Games.GetGameByKey(key);
+            Game game = _unitOfWork.Games.GetByKey(key);
 
-                return Json(new { game.GameKey, game.Name, game.Description }, JsonRequestBehavior.AllowGet);
-            }
-            catch (ArgumentException ex)
-            {
-                return Json(ex.Message, JsonRequestBehavior.AllowGet);
-            }
+            return Json(new { game.GameKey, game.Name, game.Description }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult DeleteGame(string key)
         {
-            try
-            {
-                _unitOfWork.Games.Delete(key);
-            }
-            catch (ArgumentException ex)
-            {
-                return Json(ex.Message);
-            }
+            _unitOfWork.Games.Delete(key);
 
             _unitOfWork.Save();
 
@@ -90,14 +63,8 @@ namespace MVCTask1.Controllers
         [HttpPost]
         public JsonResult AddCommentToGame(string key, string name, string body, string parentCommentKey = null)
         {
-            try
-            {
-                _unitOfWork.Comments.Create(key, name, body, parentCommentKey);
-            }
-            catch (ArgumentException ex)
-            {
-                return Json(ex.Message);
-            }
+
+            _unitOfWork.Comments.Insert(new Comment { CommentKey = key, Name = name, Body = body, ParentCommentKey = parentCommentKey});
 
             _unitOfWork.Save();
 
@@ -106,33 +73,19 @@ namespace MVCTask1.Controllers
 
         public JsonResult GetAllCommentsByGame(string key)
         {
-            try
-            {
-                return Json(_unitOfWork.Comments.GetCommentsByGame(key).Select(comment =>
-                    new { comment.CommentKey, comment.GameKey, Game = _unitOfWork.Games.GetGameByKey(comment.GameKey).Name, comment.Name, comment.Body }),
+            return Json(_unitOfWork.Comments.GetCommentsByGame(key).Select(comment =>
+                    new { comment.CommentKey, comment.GameKey, Game = _unitOfWork.Games.GetByKey(comment.GameKey).Name, comment.Name, comment.Body }),
                     JsonRequestBehavior.AllowGet);
-            }
-            catch (ArgumentException ex)
-            {
-                return Json(ex.Message, JsonRequestBehavior.AllowGet);
-            }
         }
 
         public ActionResult DownloadGame(string key)
         {
-            try
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream())
             {
-                BinaryFormatter bf = new BinaryFormatter();
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    Game game = _unitOfWork.Games.GetGameByKey(key);
-                    bf.Serialize(ms, "Name: " + game.Name + Environment.NewLine + "Description: " + game.Description);
-                    return File(ms.ToArray(), "application/bin", "game.bin");
-                }                
-            }
-            catch (ArgumentException ex)
-            {
-                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+                Game game = _unitOfWork.Games.GetByKey(key);
+                bf.Serialize(ms, "Name: " + game.Name + Environment.NewLine + "Description: " + game.Description);
+                return File(ms.ToArray(), "application/bin", "game.bin");
             }
         }
 
