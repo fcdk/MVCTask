@@ -25,6 +25,9 @@ namespace MVCTask1.Controllers
         [HttpPost]
         public JsonResult CreateGame(string name, string description)
         {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("name argument mustn`t be null and empty");
+
             _unitOfWork.Games.Insert(new Game { Name = name, Description = description });
             _unitOfWork.Save();
 
@@ -34,6 +37,9 @@ namespace MVCTask1.Controllers
         [HttpPost]
         public JsonResult UpdateGame(string key, string name, string description)
         {
+            if(string.IsNullOrEmpty(name))
+                throw new ArgumentException("name argument mustn`t be null and empty");
+
             Game game = _unitOfWork.Games.GetByKey(key);
             game.Name = name;
             game.Description = description;
@@ -54,7 +60,6 @@ namespace MVCTask1.Controllers
         public JsonResult DeleteGame(string key)
         {
             _unitOfWork.Games.Delete(key);
-
             _unitOfWork.Save();
 
             return Json("game with primary key " + key + " was deleted");
@@ -63,8 +68,8 @@ namespace MVCTask1.Controllers
         [HttpPost]
         public JsonResult AddCommentToGame(string gameKey, string name, string body, string parentCommentKey = null)
         {
-            if (string.IsNullOrEmpty(gameKey) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(body))
-                throw new ArgumentException("gameKey, name and body arguments mustn`t be null and empty");
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(body))
+                throw new ArgumentException("name and body arguments mustn`t be null and empty");
 
             if (_unitOfWork.Games.GetByKey(gameKey) == null)
                 throw new InvalidOperationException($"Game with ID={gameKey} was not found in the DB");
