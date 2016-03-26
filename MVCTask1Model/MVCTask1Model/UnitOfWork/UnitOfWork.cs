@@ -1,17 +1,18 @@
 ﻿using System;
 using MVCTask1EF;
 using MVCTask1Model.Repositories;
+using MVCTask1Model.RepositoryInterfaces;
 
 namespace MVCTask1Model.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly MVCTask1Entities _dbEntities = new MVCTask1Entities();
-        private GameRepository _gameRepository;
-        private CommentRepository _commentRepository;
+        private IGameRepository _gameRepository;
+        private ICommentRepository _commentRepository;
         private bool _disposed = false;
 
-        public GameRepository Games
+        public IGameRepository Games
         {
             get
             {
@@ -21,7 +22,7 @@ namespace MVCTask1Model.UnitOfWork
             }
         }
 
-        public CommentRepository Comments
+        public ICommentRepository Comments
         {
             get
             {

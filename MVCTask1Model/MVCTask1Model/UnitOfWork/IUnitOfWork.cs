@@ -1,12 +1,13 @@
 ﻿using System;
 using MVCTask1Model.Repositories;
+using MVCTask1Model.RepositoryInterfaces;
 
 namespace MVCTask1Model.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        GameRepository Games { get; }
-        CommentRepository Comments { get; }
+        IGameRepository Games { get; }
+        ICommentRepository Comments { get; }
         void Save();
     }
 }

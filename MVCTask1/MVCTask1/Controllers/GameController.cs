@@ -61,10 +61,34 @@ namespace MVCTask1.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddCommentToGame(string key, string name, string body, string parentCommentKey = null)
+        public JsonResult AddCommentToGame(string gameKey, string name, string body, string parentCommentKey = null)
         {
+            if (string.IsNullOrEmpty(gameKey) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(body))
+                throw new ArgumentException("gameKey, name and body arguments mustn`t be null and empty");
 
-            _unitOfWork.Comments.Insert(new Comment { CommentKey = key, Name = name, Body = body, ParentCommentKey = parentCommentKey});
+            if (_unitOfWork.Games.GetByKey(gameKey) == null)
+                throw new InvalidOperationException($"Game with ID={gameKey} was not found in the DB");
+
+            Comment comment = new Comment
+            {
+                CommentKey = Guid.NewGuid().ToString(),
+                ParentCommentKey = parentCommentKey != String.Empty ? parentCommentKey : null,
+                Name = name,
+                Body = body,
+                GameKey = gameKey
+            };
+
+            if (parentCommentKey != null)
+            {
+                Comment parentComment = _unitOfWork.Comments.GetByKey(parentCommentKey);
+
+                if (parentComment == null)
+                    throw new InvalidOperationException($"Comment with ID={parentCommentKey} was not found in the DB");
+
+                comment.Body = comment.Body.Insert(0, "[" + parentComment.Name + "] ");
+            }
+
+            _unitOfWork.Comments.Insert(comment);
 
             _unitOfWork.Save();
 

@@ -9,7 +9,7 @@ namespace MVCTask1Model.Repositories
     {
         public GameRepository(MVCTask1Entities dbEntities) : base(dbEntities) { }
 
-        public IEnumerable<Game> GetAllGames()
+        public virtual IEnumerable<Game> GetAllGames()
         {
             return DbEntities.Games;
         }

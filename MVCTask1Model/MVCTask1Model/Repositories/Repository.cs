@@ -29,24 +29,33 @@ namespace MVCTask1Model.Repositories
             entity = _dbEntities.Set<TEntity>().Find(key);
 
             if(entity == null)
-                throw new InvalidOperationException(string.Format("{0} with ID={1} was not found in the DB", typeof(TEntity).Name, key));
+                throw new InvalidOperationException($"{typeof (TEntity).Name} with ID={key} was not found in the DB");
 
             return entity;
         }
 
         public void Insert(TEntity entity)
         {
+            if (entity == null)
+                throw new ArgumentException($"entity argument with type {typeof (TEntity).Name} must not be null and empty");
+
             _dbEntities.Set<TEntity>().Add(entity);
         }
 
         public void Update(TEntity entity)
         {
+            if (entity == null)
+                throw new ArgumentException($"entity argument with type {typeof(TEntity).Name} must not be null and empty");
+
             _dbEntities.Set<TEntity>().Attach(entity);
             _dbEntities.Entry(entity).State = EntityState.Modified;
         }
 
         public void Delete(TEntity entity)
         {
+            if (entity == null)
+                throw new ArgumentException($"entity argument with type {typeof(TEntity).Name} must not be null and empty");
+
             if (_dbEntities.Entry(entity).State == EntityState.Detached)
             {
                 _dbEntities.Set<TEntity>().Attach(entity);
@@ -64,7 +73,7 @@ namespace MVCTask1Model.Repositories
             {
                 Delete(entityToDelete);
             }
-            else throw new InvalidOperationException(string.Format("{0} with ID={1} was not found in the DB", typeof(TEntity).Name, key));
+            else throw new InvalidOperationException($"{typeof (TEntity).Name} with ID={key} was not found in the DB");
         }
     }
 }
