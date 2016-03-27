@@ -77,7 +77,7 @@ namespace MVCTask1.Tests
 
             var controller = new GameController(mockUnitOfWork.Object);
 
-            controller.CreateGame(null, It.IsAny<string>());
+            controller.CreateGame(null, "TestDescription");
 
             mockGameRepository.Verify(x => x.Insert(It.IsAny<Game>()), Times.Never());
             mockUnitOfWork.Verify(x => x.Save(), Times.Never());
@@ -93,7 +93,7 @@ namespace MVCTask1.Tests
 
             var controller = new GameController(mockUnitOfWork.Object);
 
-            controller.CreateGame(string.Empty, It.IsAny<string>());
+            controller.CreateGame(string.Empty, "TestDescription");
 
             mockGameRepository.Verify(x => x.Insert(It.IsAny<Game>()), Times.Never());
             mockUnitOfWork.Verify(x => x.Save(), Times.Never());
@@ -249,7 +249,7 @@ namespace MVCTask1.Tests
 
             var controller = new GameController(mockUnitOfWork.Object);
 
-            controller.AddCommentToGame(It.IsAny<string>(), null, It.IsAny<string>(), It.IsAny<string>());
+            controller.AddCommentToGame("TestKey", null, "TestBody", "TestParentCommentKey");
 
             mockCommentRepository.Verify(x => x.Insert(It.IsAny<Comment>()), Times.Never());
             mockUnitOfWork.Verify(x => x.Save(), Times.Never());
@@ -265,7 +265,7 @@ namespace MVCTask1.Tests
 
             var controller = new GameController(mockUnitOfWork.Object);
 
-            controller.AddCommentToGame(It.IsAny<string>(), string.Empty, It.IsAny<string>(), It.IsAny<string>());
+            controller.AddCommentToGame("TestKey", string.Empty, "TestBody", "TestParentCommentKey");
 
             mockCommentRepository.Verify(x => x.Insert(It.IsAny<Comment>()), Times.Never());
             mockUnitOfWork.Verify(x => x.Save(), Times.Never());
@@ -281,7 +281,7 @@ namespace MVCTask1.Tests
 
             var controller = new GameController(mockUnitOfWork.Object);
 
-            controller.AddCommentToGame(It.IsAny<string>(), It.IsAny<string>(), null, It.IsAny<string>());
+            controller.AddCommentToGame("TestKey", "TestName", null, "TestParentCommentKey");
 
             mockCommentRepository.Verify(x => x.Insert(It.IsAny<Comment>()), Times.Never());
             mockUnitOfWork.Verify(x => x.Save(), Times.Never());
@@ -297,7 +297,7 @@ namespace MVCTask1.Tests
 
             var controller = new GameController(mockUnitOfWork.Object);
 
-            controller.AddCommentToGame(It.IsAny<string>(), It.IsAny<string>(), string.Empty, It.IsAny<string>());
+            controller.AddCommentToGame("TestKey", "TestName", string.Empty, "TestParentCommentKey");
 
             mockCommentRepository.Verify(x => x.Insert(It.IsAny<Comment>()), Times.Never());
             mockUnitOfWork.Verify(x => x.Save(), Times.Never());
