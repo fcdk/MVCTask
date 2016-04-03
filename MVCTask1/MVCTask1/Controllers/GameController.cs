@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Web.Mvc;
+using AutoMapper;
+using MVCTask1.Models.Game;
 using MVCTask1EF;
 using MVCTask1Model.UnitOfWork;
 
@@ -11,10 +13,12 @@ namespace MVCTask1.Controllers
     public class GameController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public GameController(IUnitOfWork unitOfWork)
+        public GameController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public JsonResult GetAllGames()
@@ -22,16 +26,24 @@ namespace MVCTask1.Controllers
             return Json(_unitOfWork.Games.GetAllGames().Select(game => new{ game.Name, game.Description }), JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public JsonResult CreateGame(string name, string description)
+        public ViewResult CreateGame()
         {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("name argument mustn`t be null and empty");
+            return View();
+        }
 
-            _unitOfWork.Games.Insert(new Game { Name = name, Description = description });
-            _unitOfWork.Save();
+        [HttpPost]
+        public ActionResult CreateGame(GameViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var game = _mapper.Map<Game>(model);
+                _unitOfWork.Games.Insert(game);
+                _unitOfWork.Save();
 
-            return Json(name + " was created");
+                return RedirectToAction("GetAllGames");
+            }            
+
+            return View();
         }
 
         [HttpPost]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using AutoMapper;
 using MVCTask1Model.UnitOfWork;
 using Ninject;
 
@@ -29,6 +30,9 @@ namespace MVCTask1.App_Start
         private void AddBindings()
         {
             _kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
+            _kernel.Bind<IMapper>()
+                .ToMethod(x => GameStoreMapperConfig.CreateMapper())
+                .Named("GameStoreMapper");
         }
     }
 }
