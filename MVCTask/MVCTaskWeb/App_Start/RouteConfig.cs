@@ -12,49 +12,49 @@ namespace MVCTask
             routes.MapRoute(
                 name: "AllGames",
                 url: "games",
-                defaults: new { controller = "Game", action = "GetAllGames" }
+                defaults: new { controller = "Game", action = "All" }
             );
 
             routes.MapRoute(
                 name: "CreateGame",
                 url: "games/new",
-                defaults: new { controller = "Game", action = "CreateGame" }
+                defaults: new { controller = "Game", action = "Create" }
             );
 
             routes.MapRoute(
                 name: "UpdateGame",
                 url: "games/update",
-                defaults: new { controller = "Game", action = "UpdateGame" }
+                defaults: new { controller = "Game", action = "Update" }
             );
 
             routes.MapRoute(
-                name: "GetGameByKey",
+                name: "GameDetails",
                 url: "game/{key}",
-                defaults: new { controller = "Game", action = "GetGameByKey", key = UrlParameter.Optional }
+                defaults: new { controller = "Game", action = "Details", key = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                 name: "DeleteGame",
                 url: "games/remove",
-                defaults: new { controller = "Game", action = "DeleteGame" }
+                defaults: new { controller = "Game", action = "Delete" }
             );
 
             routes.MapRoute(
                 name: "AddCommentToGame",
                 url: "game/{key}/newcomment",
-                defaults: new { controller = "Game", action = "AddCommentToGame", key = UrlParameter.Optional }
+                defaults: new { controller = "Game", action = "AddComment", key = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                 name: "GetAllCommentsByGame",
                 url: "game/{key}/comments",
-                defaults: new { controller = "Game", action = "GetAllCommentsByGame", key = UrlParameter.Optional }
+                defaults: new { controller = "Game", action = "AllComments", key = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                 name: "DownloadGame",
                 url: "game/{key}/download",
-                defaults: new { controller = "Game", action = "DownloadGame", key = UrlParameter.Optional }
+                defaults: new { controller = "Game", action = "Download", key = UrlParameter.Optional }
             );
 
         }

@@ -21,18 +21,18 @@ namespace MVCTask.Controllers
             _mapper = mapper;
         }
 
-        public JsonResult GetAllGames()
+        public JsonResult All()
         {
             return Json(_unitOfWork.Games.GetAllGames().Select(game => new{ game.Name, game.Description }), JsonRequestBehavior.AllowGet);
         }
 
-        public ViewResult CreateGame()
+        public ViewResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult CreateGame(GameViewModel model)
+        public ActionResult Create(CreateGameViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -40,14 +40,14 @@ namespace MVCTask.Controllers
                 _unitOfWork.Games.Insert(game);
                 _unitOfWork.Save();
 
-                return RedirectToAction("GetAllGames");
+                return RedirectToAction("All");
             }
 
             return View();
         }
 
         [HttpPost]
-        public JsonResult UpdateGame(string key, string name, string description)
+        public JsonResult Update(string key, string name, string description)
         {
             if(string.IsNullOrEmpty(name))
                 throw new ArgumentException("name argument mustn`t be null and empty");
@@ -61,15 +61,15 @@ namespace MVCTask.Controllers
             return Json("game with primary key " + key + " was updated");
         }
 
-        public JsonResult GetGameByKey(string key)
+        public ViewResult Details(string key)
         {
-            Game game = _unitOfWork.Games.GetByKey(key);
+            var game = _mapper.Map<GameDetailsViewModel>(_unitOfWork.Games.GetByKey(key));
 
-            return Json(new { game.GameKey, game.Name, game.Description }, JsonRequestBehavior.AllowGet);
+            return View(game);
         }
 
         [HttpPost]
-        public JsonResult DeleteGame(string key)
+        public JsonResult Delete(string key)
         {
             _unitOfWork.Games.Delete(key);
             _unitOfWork.Save();
@@ -78,7 +78,7 @@ namespace MVCTask.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddCommentToGame(string gameKey, string name, string body, string parentCommentKey = null)
+        public JsonResult AddComment(string gameKey, string name, string body, string parentCommentKey = null)
         {
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(body))
                 throw new ArgumentException("name and body arguments mustn`t be null and empty");
@@ -112,14 +112,14 @@ namespace MVCTask.Controllers
             return Json("user " + name + " has posted the comment: " + body);
         }
 
-        public JsonResult GetAllCommentsByGame(string key)
+        public JsonResult AllComments(string key)
         {
             return Json(_unitOfWork.Comments.GetCommentsByGame(key).Select(comment =>
                     new { comment.CommentKey, comment.GameKey, Game = _unitOfWork.Games.GetByKey(comment.GameKey).Name, comment.Name, comment.Body }),
                     JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult DownloadGame(string key)
+        public ActionResult Download(string key)
         {
             BinaryFormatter bf = new BinaryFormatter();
             using (MemoryStream ms = new MemoryStream())

@@ -11,8 +11,14 @@ namespace MVCTask.App_Start
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<GameViewModel, Game>()
+                cfg.CreateMap<CreateGameViewModel, Game>()
                     .ConstructUsing(x => new Game { GameKey = Guid.NewGuid().ToString(), Name = x.Name, Description = x.Description });
+                cfg.CreateMap<Game, CreateGameViewModel>();
+                cfg.CreateMap<Game, GameDetailsViewModel>()
+                    .ForMember(
+                        x => x.Key,
+                        x => x.ResolveUsing(y => y.GameKey)
+                    );
             });
 
             return config.CreateMapper();

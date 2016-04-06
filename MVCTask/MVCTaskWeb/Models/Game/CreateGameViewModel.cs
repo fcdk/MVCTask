@@ -2,7 +2,7 @@
 
 namespace MVCTask.Models.Game
 {
-    public class GameViewModel
+    public class CreateGameViewModel
     {
         [Required]
         public string Name { get; set; }
