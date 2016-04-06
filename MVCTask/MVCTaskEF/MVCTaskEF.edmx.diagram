@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2a913f89855245ce91ccc4fbeba2b659" Name="Diagram1">
+        <EntityTypeShape EntityType="MVCTaskModel.Comment" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCTaskModel.Game" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCTaskModel.Genre" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCTaskModel.GenreInGame" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCTaskModel.PlatformType" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCTaskModel.PlatformTypeInGame" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <AssociationConnector Association="MVCTaskModel.FK__Comment__GameKey__1DE57479" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCTaskModel.FK__Comment__ParentC__1ED998B2" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCTaskModel.FK__GenreInGa__GameK__21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCTaskModel.FK__PlatformT__GameK__239E4DCF" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCTaskModel.FK__Genre__ParentGen__1FCDBCEB" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCTaskModel.FK__GenreInGa__Genre__20C1E124" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCTaskModel.FK__PlatformT__Platf__22AA2996" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
