@@ -12,23 +12,16 @@ namespace MVCTaskEF
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class OrderDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Comment()
-        {
-            this.Comment1 = new HashSet<Comment>();
-        }
-    
-        public string CommentKey { get; set; }
-        public string ParentCommentKey { get; set; }
+        public string OrderDetailsKey { get; set; }
         public string GameKey { get; set; }
-        public string Name { get; set; }
-        public string Body { get; set; }
+        public string CustomersOrderKey { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<short> Quantity { get; set; }
+        public Nullable<float> Discount { get; set; }
     
+        public virtual CustomersOrder CustomersOrder { get; set; }
         public virtual Game Game { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comment1 { get; set; }
-        public virtual Comment Comment2 { get; set; }
     }
 }

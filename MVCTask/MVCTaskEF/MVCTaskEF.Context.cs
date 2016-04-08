@@ -26,10 +26,13 @@ namespace MVCTaskEF
         }
     
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<CustomersOrder> CustomersOrders { get; set; }
         public virtual DbSet<Game> Games { get; set; }
         public virtual DbSet<Genre> Genres { get; set; }
         public virtual DbSet<GenreInGame> GenreInGames { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<PlatformType> PlatformTypes { get; set; }
         public virtual DbSet<PlatformTypeInGame> PlatformTypeInGames { get; set; }
+        public virtual DbSet<Publisher> Publishers { get; set; }
     }
 }

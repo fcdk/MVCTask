@@ -54,6 +54,9 @@
     <Compile Include="Comment.cs">
       <DependentUpon>MVCTaskEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomersOrder.cs">
+      <DependentUpon>MVCTaskEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Game.cs">
       <DependentUpon>MVCTaskEF.tt</DependentUpon>
     </Compile>
@@ -78,6 +81,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MVCTaskEF.edmx</DependentUpon>
     </Compile>
+    <Compile Include="OrderDetail.cs">
+      <DependentUpon>MVCTaskEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="PlatformType.cs">
       <DependentUpon>MVCTaskEF.tt</DependentUpon>
     </Compile>
@@ -85,19 +91,23 @@
       <DependentUpon>MVCTaskEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Publisher.cs">
+      <DependentUpon>MVCTaskEF.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="MVCTaskEF.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MVCTaskEF.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="MVCTaskEF.edmx.diagram">
       <DependentUpon>MVCTaskEF.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MVCTaskEF.Context.tt">
@@ -110,9 +120,6 @@
       <DependentUpon>MVCTaskEF.edmx</DependentUpon>
       <LastGenOutput>MVCTaskEF.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

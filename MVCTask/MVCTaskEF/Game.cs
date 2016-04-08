@@ -19,17 +19,25 @@ namespace MVCTaskEF
         {
             this.Comments = new HashSet<Comment>();
             this.GenreInGames = new HashSet<GenreInGame>();
+            this.OrderDetails = new HashSet<OrderDetail>();
             this.PlatformTypeInGames = new HashSet<PlatformTypeInGame>();
         }
     
         public string GameKey { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<short> UnitsInStock { get; set; }
+        public Nullable<bool> Discontinued { get; set; }
+        public string PublisherKey { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual Publisher Publisher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GenreInGame> GenreInGames { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlatformTypeInGame> PlatformTypeInGames { get; set; }
     }
