@@ -1,0 +1,10 @@
+﻿@model MVCTask.Models.Publisher.PublisherViewModel
+@{
+    ViewBag.Title = "New publisher";
+}
+
+@using (Html.BeginForm("Create", "Publisher", FormMethod.Post, new { role = "form" }))
+{
+    @Html.EditorForModel()
+    <input type="submit" value="Create" />
+}

@@ -1,4 +1,7 @@
-﻿@model MVCTask.Models.Publisher.PublisherDetailsViewModel
+﻿@model MVCTask.Models.Publisher.PublisherViewModel
+@{
+    ViewBag.Title = "Publisher details";
+}
 
 <h4>@Html.LabelFor(m => m.CompanyName)</h4>
 <p>@Model.CompanyName</p>

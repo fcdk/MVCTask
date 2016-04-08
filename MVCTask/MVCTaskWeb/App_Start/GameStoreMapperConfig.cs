@@ -15,7 +15,11 @@ namespace MVCTask.App_Start
                 cfg.CreateMap<CreateGameViewModel, Game>()
                     .ConstructUsing(x => new Game
                     {
-                        GameKey = Guid.NewGuid().ToString(), Name = x.Name, Description = x.Description, Price = x.Price, UnitsInStock = x.UnitsInStock,
+                        GameKey = Guid.NewGuid().ToString(),
+                        Name = x.Name,
+                        Description = x.Description,
+                        Price = x.Price,
+                        UnitsInStock = x.UnitsInStock,
                         Discontinued = x.Discontinued
                     });
                 cfg.CreateMap<Game, CreateGameViewModel>();
@@ -32,6 +36,15 @@ namespace MVCTask.App_Start
                 cfg.CreateMap<Game, CreateGameViewModel>();
 
                 cfg.CreateMap<Publisher, PublisherViewModel>();
+                cfg.CreateMap<PublisherViewModel, Publisher>()
+                    .ConstructUsing(x => new Publisher
+                    {
+                        PublisherKey = Guid.NewGuid().ToString(),
+                        CompanyName = x.CompanyName,
+                        Description = x.Description,
+                        HomePage = x.HomePage
+                    });
+
             });
 
             return config.CreateMapper();

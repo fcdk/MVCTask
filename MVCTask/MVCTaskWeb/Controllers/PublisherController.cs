@@ -1,6 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System.Net;
+using System.Web.Mvc;
 using AutoMapper;
 using MVCTask.Models.Publisher;
+using MVCTaskEF;
 using MVCTaskModel.UnitOfWork;
 
 namespace MVCTask.Controllers
@@ -22,6 +24,26 @@ namespace MVCTask.Controllers
             var publisherViewModel = _mapper.Map<PublisherViewModel>(publisher);
 
             return View(publisherViewModel);
+        }
+
+        public ViewResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(PublisherViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var publisher = _mapper.Map<Publisher>(model);
+                _unitOfWork.Publishers.Insert(publisher);
+                _unitOfWork.Save();
+
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+
+            return View();
         }
 
     }

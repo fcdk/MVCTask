@@ -66,10 +66,16 @@ namespace MVCTask
 
             // PublisherController routes
             routes.MapRoute(
+                name: "CreatePublisher",
+                url: "publisher/new",
+                defaults: new { controller = "Publisher", action = "Create" }
+            );
+
+            routes.MapRoute(
                 name: "GetPublisherByName",
                 url: "publisher/{name}",
                 defaults: new { controller = "Publisher", action = "Details", name = UrlParameter.Optional }
-            );
+            );            
 
         }
     }

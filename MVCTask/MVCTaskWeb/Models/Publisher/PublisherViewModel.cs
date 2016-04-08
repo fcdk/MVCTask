@@ -4,7 +4,8 @@ namespace MVCTask.Models.Publisher
 {
     public class PublisherViewModel
     {
-        [Display(Name = "Company name")]
+        [Required(ErrorMessage = "Company name is required")]
+        [Display(Name = "Company name")]        
         public string CompanyName { get; set; }
         [Display(Name = "Description")]
         public string Description { get; set; }
