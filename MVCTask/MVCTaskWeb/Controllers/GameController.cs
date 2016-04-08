@@ -47,14 +47,19 @@ namespace MVCTask.Controllers
         }
 
         [HttpPost]
-        public JsonResult Update(string key, string name, string description)
+        public JsonResult Update(string key, string name, string description, decimal? price = null, short? unitsInStock = null, bool? discontinued = null)
         {
             if(string.IsNullOrEmpty(name))
                 throw new ArgumentException("name argument mustn`t be null and empty");
 
             Game game = _unitOfWork.Games.GetByKey(key);
+
             game.Name = name;
             game.Description = description;
+            game.Price = price;
+            game.UnitsInStock = unitsInStock;
+            game.Discontinued = discontinued;
+
             _unitOfWork.Games.Update(game);
             _unitOfWork.Save();
 

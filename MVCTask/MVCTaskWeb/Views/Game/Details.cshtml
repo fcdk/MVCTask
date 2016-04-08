@@ -3,9 +3,15 @@
     ViewBag.Title = "Game details";
 }
 
-<h4>Name: </h4>
+<h4>@Html.LabelFor(m => m.Name): </h4>
 <p>@Model.Name</p>
-<h4>Description: </h4>
+<h4>@Html.LabelFor(m => m.Description): </h4>
 <p>@Model.Description</p>
+<h4>@Html.LabelFor(m => m.Price): </h4>
+<p>@Model.Price</p>
+<h4>@Html.LabelFor(m => m.UnitsInStock): </h4>
+<p>@Model.UnitsInStock</p>
+<h4>@Html.LabelFor(m => m.Discontinued): </h4>
+<p>@Model.Discontinued</p>
 <a href='@Url.Action("Download", "Game", new {key = Model.Key})' target="_blank">Download</a>
 <a href='@Url.Action("Comments", "Game", new {key = Model.Key})'>Comments</a>
