@@ -1,9 +1,9 @@
-﻿@model MVCTask.Models.Game.GameViewModel
+﻿@model MVCTask.Models.Game.CreateGameViewModel
 @{
     ViewBag.Title = "New game";
 }
 
-@using (Html.BeginForm("CreateGame", "Game", FormMethod.Post, new { role = "form" }))
+@using (Html.BeginForm("Create", "Game", FormMethod.Post, new { role = "form" }))
 {
     @Html.EditorForModel()
     <input type="submit" value="Create" />

@@ -77,46 +77,41 @@ namespace MVCTask.Controllers
             return Json("game with primary key " + key + " was deleted");
         }
 
+        //adding comment
         [HttpPost]
-        public JsonResult AddComment(string gameKey, string name, string body, string parentCommentKey = null)
+        public ActionResult AddComment(CommentsViewModel model)
         {
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(body))
-                throw new ArgumentException("name and body arguments mustn`t be null and empty");
-
-            if (_unitOfWork.Games.GetByKey(gameKey) == null)
-                throw new InvalidOperationException($"Game with ID={gameKey} was not found in the DB");
-
-            Comment comment = new Comment
+            if (ModelState.IsValid)
             {
-                CommentKey = Guid.NewGuid().ToString(),
-                ParentCommentKey = parentCommentKey != String.Empty ? parentCommentKey : null,
-                Name = name,
-                Body = body,
-                GameKey = gameKey
-            };
+                if (_unitOfWork.Games.GetByKey(model.GameKey) == null)
+                    throw new InvalidOperationException($"Game with ID={model.GameKey} was not found in the DB");
 
-            if (parentCommentKey != null)
-            {
-                Comment parentComment = _unitOfWork.Comments.GetByKey(parentCommentKey);
+                var comment = _mapper.Map<Comment>(model);
 
-                if (parentComment == null)
-                    throw new InvalidOperationException($"Comment with ID={parentCommentKey} was not found in the DB");
+                if (comment.ParentCommentKey != null)
+                {
+                    Comment parentComment = _unitOfWork.Comments.GetByKey(comment.ParentCommentKey);
 
-                comment.Body = comment.Body.Insert(0, "[" + parentComment.Name + "] ");
+                    comment.Body = comment.Body.Insert(0, "[" + parentComment.Name + "] ");
+                }
+
+                _unitOfWork.Comments.Insert(comment);
+                _unitOfWork.Save();
+
+                return RedirectToAction("Comments", new { key = model.GameKey });
             }
 
-            _unitOfWork.Comments.Insert(comment);
+            model.AllComments = _unitOfWork.Comments.GetCommentsByGame(model.GameKey);
 
-            _unitOfWork.Save();
-
-            return Json("user " + name + " has posted the comment: " + body);
+            return View("Comments", model);
         }
 
-        public JsonResult AllComments(string key)
+        public ViewResult Comments(string key)
         {
-            return Json(_unitOfWork.Comments.GetCommentsByGame(key).Select(comment =>
-                    new { comment.CommentKey, comment.GameKey, Game = _unitOfWork.Games.GetByKey(comment.GameKey).Name, comment.Name, comment.Body }),
-                    JsonRequestBehavior.AllowGet);
+            var model = new CommentsViewModel();
+            model.AllComments = _unitOfWork.Comments.GetCommentsByGame(key);
+            model.GameKey = key;
+            return View(model);
         }
 
         public ActionResult Download(string key)
@@ -128,6 +123,13 @@ namespace MVCTask.Controllers
                 bf.Serialize(ms, "Name: " + game.Name + Environment.NewLine + "Description: " + game.Description);
                 return File(ms.ToArray(), "application/bin", "game.bin");
             }
+        }
+
+        [OutputCache(Duration = 60)]
+        public PartialViewResult Total()
+        {
+            ViewBag.NumberOfGames = _unitOfWork.Games.GetAllGames().Count();
+            return PartialView("_Total");
         }
 
     }

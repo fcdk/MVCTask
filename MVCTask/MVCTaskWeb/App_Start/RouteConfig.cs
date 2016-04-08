@@ -48,13 +48,19 @@ namespace MVCTask
             routes.MapRoute(
                 name: "GetAllCommentsByGame",
                 url: "game/{key}/comments",
-                defaults: new { controller = "Game", action = "AllComments", key = UrlParameter.Optional }
+                defaults: new { controller = "Game", action = "Comments", key = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                 name: "DownloadGame",
                 url: "game/{key}/download",
                 defaults: new { controller = "Game", action = "Download", key = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "NumberOfGames",
+                url: "game/total",
+                defaults: new { controller = "Game", action = "Total" }
             );
 
         }

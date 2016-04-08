@@ -1,7 +1,11 @@
 ﻿@model MVCTask.Models.Game.GameDetailsViewModel
+@{
+    ViewBag.Title = "Game details";
+}
 
 <h4>Name: </h4>
 <p>@Model.Name</p>
 <h4>Description: </h4>
 <p>@Model.Description</p>
-<a href='@Url.Action("Download", "Game", new { key = Model.Key })' target="_blank">Download</a>
+<a href='@Url.Action("Download", "Game", new {key = Model.Key})' target="_blank">Download</a>
+<a href='@Url.Action("Comments", "Game", new {key = Model.Key})'>Comments</a>

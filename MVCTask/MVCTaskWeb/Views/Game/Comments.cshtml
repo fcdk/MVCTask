@@ -1,0 +1,33 @@
+﻿@model MVCTask.Models.Game.CommentsViewModel
+@{
+    ViewBag.Title = "Game comments";
+}
+
+<ul>
+    @foreach (var comment in Model.AllComments)
+    {
+        <li>
+            <p><b>Key: </b>@comment.CommentKey</p>
+            <p><b>Name: </b>@comment.Name</p>
+            <p><b>Comment: </b>@comment.Body</p>
+        </li>
+    }
+</ul>
+<h3>Add comment</h3>
+<form action="/game/@Model.GameKey/newcomment" method="post">
+    @Html.ValidationSummary("")
+    @Html.HiddenFor(m => m.GameKey)
+    @Html.LabelFor(m => m.Name)
+    <br />
+    @Html.TextBoxFor(m => m.Name)
+    <br />
+    @Html.LabelFor(m => m.ParentCommentKey)
+    <br />
+    @Html.TextBoxFor(m => m.ParentCommentKey)
+    <br />
+    @Html.LabelFor(m => m.Body)
+    <br />
+    @Html.TextBoxFor(m => m.Body)
+    <br />
+    <input type="submit" value="Create" />
+</form>

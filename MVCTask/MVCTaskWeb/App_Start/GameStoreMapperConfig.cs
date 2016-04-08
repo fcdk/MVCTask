@@ -19,6 +19,9 @@ namespace MVCTask.App_Start
                         x => x.Key,
                         x => x.ResolveUsing(y => y.GameKey)
                     );
+                cfg.CreateMap<CommentsViewModel, Comment>()
+                    .ConstructUsing(x => new Comment { CommentKey = Guid.NewGuid().ToString(), ParentCommentKey = x.ParentCommentKey, Name = x.Name,
+                        Body = x.Body, GameKey = x.GameKey });
             });
 
             return config.CreateMapper();
