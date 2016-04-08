@@ -10,6 +10,7 @@ namespace MVCTaskModel.UnitOfWork
         private readonly MVCTaskEntities _dbEntities = new MVCTaskEntities();
         private IGameRepository _gameRepository;
         private ICommentRepository _commentRepository;
+        private IPublisherRepository _publisherRepository;
         private bool _disposed = false;
 
         public IGameRepository Games
@@ -29,6 +30,16 @@ namespace MVCTaskModel.UnitOfWork
                 if (_commentRepository == null)
                     _commentRepository = new CommentRepository(_dbEntities);
                 return _commentRepository;
+            }
+        }
+
+        public IPublisherRepository Publishers
+        {
+            get
+            {
+                if (_publisherRepository == null)
+                    _publisherRepository = new PublisherRepository(_dbEntities);
+                return _publisherRepository;
             }
         }
 

@@ -9,6 +9,7 @@ namespace MVCTask
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // GameController routes
             routes.MapRoute(
                 name: "AllGames",
                 url: "games",
@@ -61,6 +62,13 @@ namespace MVCTask
                 name: "NumberOfGames",
                 url: "game/total",
                 defaults: new { controller = "Game", action = "Total" }
+            );
+
+            // PublisherController routes
+            routes.MapRoute(
+                name: "GetPublisherByName",
+                url: "publisher/{name}",
+                defaults: new { controller = "Publisher", action = "Details", name = UrlParameter.Optional }
             );
 
         }

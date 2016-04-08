@@ -8,6 +8,7 @@ namespace MVCTaskModel.UnitOfWork
     {
         IGameRepository Games { get; }
         ICommentRepository Comments { get; }
+        IPublisherRepository Publishers { get; }
         void Save();
     }
 }

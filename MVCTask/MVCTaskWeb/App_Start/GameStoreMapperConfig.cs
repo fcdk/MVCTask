@@ -1,6 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using MVCTask.Models.Game;
+using MVCTask.Models.Publisher;
 using MVCTaskEF;
 
 namespace MVCTask.App_Start
@@ -18,14 +19,19 @@ namespace MVCTask.App_Start
                         Discontinued = x.Discontinued
                     });
                 cfg.CreateMap<Game, CreateGameViewModel>();
+
                 cfg.CreateMap<Game, GameDetailsViewModel>()
                     .ForMember(
                         x => x.Key,
                         x => x.ResolveUsing(y => y.GameKey)
                     );
+
                 cfg.CreateMap<CommentsViewModel, Comment>()
                     .ConstructUsing(x => new Comment { CommentKey = Guid.NewGuid().ToString(), ParentCommentKey = x.ParentCommentKey, Name = x.Name,
                         Body = x.Body, GameKey = x.GameKey });
+                cfg.CreateMap<Game, CreateGameViewModel>();
+
+                cfg.CreateMap<Publisher, PublisherViewModel>();
             });
 
             return config.CreateMapper();

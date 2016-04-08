@@ -1,0 +1,8 @@
+﻿@model MVCTask.Models.Publisher.PublisherDetailsViewModel
+
+<h4>@Html.LabelFor(m => m.CompanyName)</h4>
+<p>@Model.CompanyName</p>
+<h4>@Html.LabelFor(m => m.Description)</h4>
+<p>@Model.Description</p>
+<h4>@Html.LabelFor(m => m.HomePage)</h4>
+<a href="@Model.HomePage" target="_blank">Go to the home page</a>
