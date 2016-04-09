@@ -1,0 +1,21 @@
+﻿@model MVCTask.Models.Order.OrderDetailsViewModel
+@{
+    ViewBag.Title = "Buy game";
+}
+
+<h3>Buy @Model.GameName</h3>
+
+@using (Html.BeginForm("Buy", "Order", FormMethod.Post, new { role = "form" }))
+{
+    @Html.ValidationSummary("")
+    @Html.HiddenFor(m => m.GameKey)
+    @Html.HiddenFor(m => m.Discount)
+    @Html.LabelFor(m => m.Quantity)
+    <br />
+    @Html.TextBoxFor(m => m.Quantity)
+    <br />
+    @Html.LabelFor(m => m.Discount)
+    <br />
+    <p>@Model.Discount</p>
+    <input type="submit" value="Buy!" />
+}

@@ -118,10 +118,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Basket\BasketService.cs" />
+    <Compile Include="Models\Order\BasketViewModel.cs" />
+    <Compile Include="Services\BasketManager.cs" />
+    <Compile Include="Services\CustomerFakeService.cs" />
+    <Compile Include="Services\IBasketManager.cs" />
+    <Compile Include="Services\ICustomerService.cs" />
     <Compile Include="Models\Game\CommentsViewModel.cs" />
     <Compile Include="Models\Game\CreateGameViewModel.cs" />
     <Compile Include="Models\Game\GameDetailsViewModel.cs" />
+    <Compile Include="Models\Order\OrderDetailsViewModel.cs" />
     <Compile Include="Models\Publisher\PublisherViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -136,6 +141,8 @@
     <Content Include="Views\Shared\_Total.cshtml" />
     <Content Include="Views\Publisher\Details.cshtml" />
     <Content Include="Views\Publisher\Create.cshtml" />
+    <Content Include="Views\Order\Buy.cshtml" />
+    <Content Include="Views\Order\Basket.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -145,8 +152,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Order\" />
-    <Folder Include="Views\Order\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MVCTaskEF\MVCTaskEF.csproj">

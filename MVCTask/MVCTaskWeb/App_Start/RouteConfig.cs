@@ -75,7 +75,19 @@ namespace MVCTask
                 name: "GetPublisherByName",
                 url: "publisher/{name}",
                 defaults: new { controller = "Publisher", action = "Details", name = UrlParameter.Optional }
-            );            
+            );
+
+            routes.MapRoute(
+                name: "BuyGame",
+                url: "game/{gamekey}/buy",
+                defaults: new { controller = "Order", action = "Buy", gamekey = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "GetBasket",
+                url: "basket",
+                defaults: new { controller = "Order", action = "Basket" }
+            );
 
         }
     }

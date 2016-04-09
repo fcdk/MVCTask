@@ -1,6 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using MVCTask.Models.Game;
+using MVCTask.Models.Order;
 using MVCTask.Models.Publisher;
 using MVCTaskEF;
 
@@ -35,8 +36,13 @@ namespace MVCTask.App_Start
                     );
 
                 cfg.CreateMap<CommentsViewModel, Comment>()
-                    .ConstructUsing(x => new Comment { CommentKey = Guid.NewGuid().ToString(), ParentCommentKey = x.ParentCommentKey, Name = x.Name,
-                        Body = x.Body, GameKey = x.GameKey });
+                    .ConstructUsing(x => new Comment
+                    {
+                        CommentKey = Guid.NewGuid().ToString(),
+                        ParentCommentKey = x.ParentCommentKey,
+                        Name = x.Name,
+                        Body = x.Body,
+                        GameKey = x.GameKey });
                 cfg.CreateMap<Game, CreateGameViewModel>();
 
                 cfg.CreateMap<Publisher, PublisherViewModel>();
@@ -47,6 +53,15 @@ namespace MVCTask.App_Start
                         CompanyName = x.CompanyName,
                         Description = x.Description,
                         HomePage = x.HomePage
+                    });
+
+                cfg.CreateMap<OrderDetailsViewModel, OrderDetail>()
+                    .ConstructUsing(x => new OrderDetail
+                    {
+                        OrderDetailsKey = Guid.NewGuid().ToString(),
+                        GameKey = x.GameKey,                        
+                        Quantity = x.Quantity,
+                        Discount = x.Discount
                     });
 
             });

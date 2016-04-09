@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using AutoMapper;
+using MVCTask.Services;
 using MVCTaskModel.UnitOfWork;
 using Ninject;
 
@@ -33,6 +34,8 @@ namespace MVCTask.App_Start
             _kernel.Bind<IMapper>()
                 .ToMethod(x => GameStoreMapperConfig.CreateMapper())
                 .Named("GameStoreMapper");
+            _kernel.Bind<ICustomerService>().To<CustomerFakeService>();
+            _kernel.Bind<IBasketManager>().To<BasketManager>();
         }
     }
 }

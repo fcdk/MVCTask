@@ -1,0 +1,17 @@
+﻿@model MVCTask.Models.Order.BasketViewModel
+@{
+    ViewBag.Title = "Basket";
+}
+
+<h3>Your basket</h3>
+@if (Model.Orders.Count() == 0)
+{
+    <h4>Your basket is empty. Buy smth!</h4>
+}
+else
+{
+    foreach (var order in Model.Orders)
+    {
+        <p><b>Game: </b>@order.Game.Name <b>Quantity: </b>@order.Quantity <b>Price: </b>@order.Price <b>Discount: </b>@order.Discount</p>
+    }
+}

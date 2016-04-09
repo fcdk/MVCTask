@@ -7,6 +7,8 @@
 <p>@Model.Name</p>
 <h4>@Html.LabelFor(m => m.Description): </h4>
 <p>@Model.Description</p>
+<h4>Publisher: </h4>
+<a href="/publisher/@Model.PublisherName">@Model.PublisherName</a>
 <h4>@Html.LabelFor(m => m.Price): </h4>
 <p>@Model.Price</p>
 <h4>@Html.LabelFor(m => m.UnitsInStock): </h4>
@@ -15,4 +17,4 @@
 <p>@Model.Discontinued</p>
 <a href='@Url.Action("Download", "Game", new {key = Model.Key})' target="_blank">Download</a>
 <a href='@Url.Action("Comments", "Game", new {key = Model.Key})'>Comments</a>
-<a href="/publisher/@Model.PublisherName">@Model.PublisherName</a>
+<a href="@Url.Action("Buy", "Order", new { gamekey = Model.Key })">Buy</a>

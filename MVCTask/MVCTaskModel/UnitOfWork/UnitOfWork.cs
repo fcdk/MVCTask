@@ -11,6 +11,8 @@ namespace MVCTaskModel.UnitOfWork
         private IGameRepository _gameRepository;
         private ICommentRepository _commentRepository;
         private IPublisherRepository _publisherRepository;
+        private ICustomersOrderRepository _customersOrderRepository;
+        private IOrderDetailRepository _orderDetailRepository;
         private bool _disposed = false;
 
         public IGameRepository Games
@@ -40,6 +42,26 @@ namespace MVCTaskModel.UnitOfWork
                 if (_publisherRepository == null)
                     _publisherRepository = new PublisherRepository(_dbEntities);
                 return _publisherRepository;
+            }
+        }
+
+        public ICustomersOrderRepository CustomersOrders
+        {
+            get
+            {
+                if (_customersOrderRepository == null)
+                    _customersOrderRepository = new CustomersOrderRepository(_dbEntities);
+                return _customersOrderRepository;
+            }
+        }
+
+        public IOrderDetailRepository OrderDetails
+        {
+            get
+            {
+                if (_orderDetailRepository == null)
+                    _orderDetailRepository = new OrderDetailRepository(_dbEntities);
+                return _orderDetailRepository;
             }
         }
 
