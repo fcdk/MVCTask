@@ -28,6 +28,10 @@ namespace MVCTask.App_Start
                     .ForMember(
                         x => x.Key,
                         x => x.ResolveUsing(y => y.GameKey)
+                    )
+                    .ForMember(
+                        x => x.PublisherName,
+                        x => x.ResolveUsing(y => y.Publisher.CompanyName)
                     );
 
                 cfg.CreateMap<CommentsViewModel, Comment>()

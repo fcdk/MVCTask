@@ -8,5 +8,6 @@
         public decimal? Price { get; set; }
         public short? UnitsInStock { get; set; }
         public bool? Discontinued { get; set; }
+        public string PublisherName { get; set; }
     }
 }
