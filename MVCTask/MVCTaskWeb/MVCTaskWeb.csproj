@@ -113,10 +113,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\GameStoreMapperConfig.cs" />
     <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PublisherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Basket\BasketService.cs" />
     <Compile Include="Models\Game\CommentsViewModel.cs" />
     <Compile Include="Models\Game\CreateGameViewModel.cs" />
     <Compile Include="Models\Game\GameDetailsViewModel.cs" />
@@ -143,6 +145,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Order\" />
+    <Folder Include="Views\Order\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MVCTaskEF\MVCTaskEF.csproj">
