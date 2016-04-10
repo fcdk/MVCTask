@@ -32,7 +32,7 @@ namespace MVCTask.App_Start
                     )
                     .ForMember(
                         x => x.PublisherName,
-                        x => x.ResolveUsing(y => y.Publisher.CompanyName)
+                        x => x.ResolveUsing(y => y.Publisher?.CompanyName)
                     );
 
                 cfg.CreateMap<CommentsViewModel, Comment>()
